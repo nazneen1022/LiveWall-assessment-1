@@ -34,7 +34,7 @@ const img = {
   height: "240px",
 };
 
-export default function Upload(props) {
+export default function Upload() {
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",

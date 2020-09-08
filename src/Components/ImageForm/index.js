@@ -1,17 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import SearchLocationInput from "./SearchLocationInput";
+import axios from "axios";
+
+import "./styles.css";
+import REACT_APP_GOOGLE_API_KEY from "../../Config/constants";
 
 export default function ImageForm(props) {
-  //console.log("props:", props.enableForm);
+  //console.log("props:", props);
+  const [tags, setTags] = useState([]);
+  useEffect(() => {
+    async function fetchTags() {
+      const response = await axios.post(
+        `https://vision.googleapis.com/v1/images:annotate?key=${REACT_APP_GOOGLE_API_KEY}`,
+        {
+          requests: [
+            {
+              image: {
+                source: {
+                  imageUri:
+                    "blob:http://localhost:3000/33318146-b463-4046-a787-167496995c44",
+                },
+              },
+              features: [
+                {
+                  type: "LABEL_DETECTION",
+                  maxResults: 10,
+                },
+                {
+                  type: "SAFE_SEARCH_DETECTION",
+                },
+              ],
+            },
+          ],
+        }
+      );
+      //console.log("response:", response.data.responses.labelAnnotations);
+      setTags(response.data.responses.labelAnnotations);
+    }
+    fetchTags();
+  }, []);
   return (
-    <div>
+    <div
+      style={{
+        fontSize: "18px",
+        fontFamily: "Raleway",
+        fontWeight: "bolder",
+        textAlign: "left",
+      }}
+    >
       {!props.enableForm && (
-        <h3 style={{ color: "red", fontSize: "bolder", fontFamily: "verdana" }}>
-          1 photo is selected
-        </h3>
+        <h3 style={{ color: "#FB001C" }}>1 photo is selected</h3>
       )}
-
+      <br />
       <Form>
         <Form.Group controlId="formGroupTitle">
           <Form.Label>Title</Form.Label>
@@ -32,16 +73,13 @@ export default function ImageForm(props) {
         </Form.Group>
         <Form.Group controlId="formGroupLocation">
           <Form.Label>Location</Form.Label>
-          {/* <Form.Control
-            type="text"
-            placeholder="Enter where this photo was taken"
-            disabled={props.enableForm}
-          /> */}
           <SearchLocationInput
             onChange={() => null}
             disabled={props.enableForm}
           />
         </Form.Group>
+
+        <hr />
         <Form.Group controlId="formGroupTags">
           <Form.Label>Tags</Form.Label>
           <Form.Control
@@ -49,6 +87,16 @@ export default function ImageForm(props) {
             placeholder="Add tags"
             disabled={props.enableForm}
           />
+        </Form.Group>
+        <Form.Group>
+          {tags && tags.length > 0 && (
+            <div>
+              Recommended Tags <br />
+              {tags.map((tag) => (
+                <button className="tags">{`+ ${tag}`}</button>
+              ))}
+            </div>
+          )}
         </Form.Group>
         <Form.Group controlId="formGroupCategory">
           <Form.Label>Category</Form.Label>

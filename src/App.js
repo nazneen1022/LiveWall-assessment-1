@@ -18,7 +18,9 @@ function App() {
 
         <br />
       </div>
-      <div className="split right">{<ImageForm enableForm={enableForm} />}</div>
+      <div className="split right">
+        <ImageForm enableForm={enableForm} />
+      </div>
     </div>
   );
 }

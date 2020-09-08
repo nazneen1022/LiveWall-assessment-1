@@ -11,6 +11,7 @@ const thumbsContainer = {
 
 const thumb = {
   display: "inline-flex",
+  flexDirection: "row",
   borderRadius: 2,
   border: "1px solid #eaeaea",
   marginBottom: 8,
@@ -22,7 +23,7 @@ const thumb = {
 };
 
 const thumbInner = {
-  display: "flex",
+  display: "inline-flex",
   flexDirection: "column",
   minWidth: 0,
   overflow: "hidden",
@@ -38,6 +39,7 @@ export default function Upload(props) {
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
+    multiple: false,
     onDrop: (acceptedFiles) => {
       setFiles(
         acceptedFiles.map((file) =>
@@ -48,7 +50,7 @@ export default function Upload(props) {
       );
     },
   });
-
+  console.log("files:", files);
   const thumbs = files.map((file) => (
     <div style={thumb} key={file.name}>
       <div style={thumbInner}>

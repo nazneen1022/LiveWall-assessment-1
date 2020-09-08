@@ -7,7 +7,7 @@ import "./styles.css";
 import REACT_APP_GOOGLE_API_KEY from "../../Config/constants";
 
 export default function ImageForm(props) {
-  //console.log("props:", props);
+  console.log("props:", props.files);
   const [tags, setTags] = useState([]);
   useEffect(() => {
     async function fetchTags() {
@@ -18,8 +18,7 @@ export default function ImageForm(props) {
             {
               image: {
                 source: {
-                  imageUri:
-                    "blob:http://localhost:3000/33318146-b463-4046-a787-167496995c44",
+                  imageUri: `${props.files.preview}`,
                 },
               },
               features: [
@@ -39,7 +38,7 @@ export default function ImageForm(props) {
       setTags(response.data.responses.labelAnnotations);
     }
     fetchTags();
-  }, []);
+  }, [props.files.preview]);
   return (
     <div
       style={{

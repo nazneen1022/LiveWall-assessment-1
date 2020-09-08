@@ -1,2 +1,0 @@
-const REACT_APP_GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
-export default REACT_APP_GOOGLE_API_KEY;

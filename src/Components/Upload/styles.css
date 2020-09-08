@@ -1,0 +1,30 @@
+.droparea {
+  width: 240px;
+  height: 240px;
+  align-items: center;
+  text-align: center;
+  border: 2px dashed grey;
+}
+.button {
+  border-radius: 50%;
+  background-color: rgb(241, 22, 22);
+  color: white;
+  text-align: center;
+  font-size: xx-large;
+  position: absolute;
+  padding: 5px;
+  top: 35%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.imageContainer {
+  box-sizing: border-box;
+}
+.row {
+  display: flex;
+}
+.column {
+  flex: 100%;
+  padding: 5px;
+}

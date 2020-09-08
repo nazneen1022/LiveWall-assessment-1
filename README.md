@@ -1,68 +1,35 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Challenge
 
-## Available Scripts
+At the moment we are creating a new web application for Zoom.nl. This is a platform where
+users can upload photos and tag them.
+In this assessment we want to ask you to create one screen of the application. You can find the
+screenshot here: https://marvelapp.com/prototype/8a8bfdb/screen/67991858
 
-In the project directory, you can run:
+### What is expected:
 
-### `npm start`
+1. The final assessment should more or less match the design as in the link.
+2. The final assessment should work on desktop and mobile.
+3. Technology is react (the web application) and NodeJS (the upload API)
+4. There is a SQL table in the backend.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### How it works:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- You can drag and drop files in the area. This starts uploading your image
+- When clicking the image, you can enter the metadata on the right side.
+- The image is in Dutch, so the fields are explained in the correct order:
+  - Titel / Title: the title of the image. Initially we add the filename there.
+  - Description: the description of the image.
+  - Locatie / Location: the location of the image. We use Google Maps JS Api to complete the input.
+  - Tags: the tags of the image. We fetch them automatically with Google Vision API.
+    https://cloud.google.com/vision?hl=nl
+  - Category: a dropdown with categories
+  - The checkboxes below the category can all be left out of the demo.
 
-### `npm test`
+## How to Install this?
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- clone the app
+- cd into your project
+- Install dependencies using npm install
+- start development server using npm run start
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+❗️Note: I have used a Google Maps JavaScript API and Google Cloud Vision API for location and fetching the image tags. GOOGLE API key is used in this code for this, please create your own GOOGLE_API_KEY 🗝 and add it to .env file using name REACT_APP_GOOGLE_API_KEY = <YOUR_GOOGLE_API_KEY>

@@ -1,5 +1,6 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
+import SearchLocationInput from "./SearchLocationInput";
 
 export default function ImageForm(props) {
   //console.log("props:", props.enableForm);
@@ -16,7 +17,7 @@ export default function ImageForm(props) {
           <Form.Label>Title</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter Title"
+            placeholder="Fill in an appropriate title for this photo"
             disabled={props.enableForm}
           />
         </Form.Group>
@@ -25,15 +26,19 @@ export default function ImageForm(props) {
           <Form.Control
             as="textarea"
             rows="3"
-            placeholder="Description"
+            placeholder="Give your photo a short description"
             disabled={props.enableForm}
           />
         </Form.Group>
         <Form.Group controlId="formGroupLocation">
           <Form.Label>Location</Form.Label>
-          <Form.Control
+          {/* <Form.Control
             type="text"
-            placeholder="Location"
+            placeholder="Enter where this photo was taken"
+            disabled={props.enableForm}
+          /> */}
+          <SearchLocationInput
+            onChange={() => null}
             disabled={props.enableForm}
           />
         </Form.Group>
@@ -41,18 +46,18 @@ export default function ImageForm(props) {
           <Form.Label>Tags</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Tags"
+            placeholder="Add tags"
             disabled={props.enableForm}
           />
         </Form.Group>
         <Form.Group controlId="formGroupCategory">
           <Form.Label>Category</Form.Label>
-          <Form.Control as="select">
+          <Form.Control as="select" disabled={props.enableForm}>
+            <option>Enter a category</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
             <option>4</option>
-            <option>5</option>
           </Form.Control>
         </Form.Group>
       </Form>

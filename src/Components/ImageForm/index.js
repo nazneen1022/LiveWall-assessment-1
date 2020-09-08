@@ -4,7 +4,6 @@ import SearchLocationInput from "./SearchLocationInput";
 import axios from "axios";
 
 import "./styles.css";
-import REACT_APP_GOOGLE_API_KEY from "../../Config/constants";
 
 export default function ImageForm(props) {
   console.log("props:", props.files);
@@ -12,7 +11,10 @@ export default function ImageForm(props) {
   useEffect(() => {
     async function fetchTags() {
       const response = await axios.post(
-        `https://vision.googleapis.com/v1/images:annotate?key=${REACT_APP_GOOGLE_API_KEY}`,
+        `https://vision.googleapis.com/v1/images:annotate?key=${process.env.REACT_APP_GOOGLE_API_KEY.replace(
+          /"/g,
+          ""
+        ).replace(/;/g, "")}`,
         {
           requests: [
             {

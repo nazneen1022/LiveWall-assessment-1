@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import REACT_APP_GOOGLE_API_KEY from "../../Config/constants";
-
 let autoComplete;
 
 const loadScript = (url, callback) => {
@@ -25,7 +23,7 @@ const loadScript = (url, callback) => {
 function handleScriptLoad(updateQuery, autoCompleteRef) {
   autoComplete = new window.google.maps.places.Autocomplete(
     autoCompleteRef.current,
-    { types: ["(cities)"], componentRestrictions: { country: "us" } }
+    { types: ["(cities)"], componentRestrictions: { country: "nl" } }
   );
   autoComplete.setFields(["address_components", "formatted_address"]);
   autoComplete.addListener("place_changed", () =>
@@ -46,7 +44,10 @@ function SearchLocationInput(props) {
 
   useEffect(() => {
     loadScript(
-      `https://maps.googleapis.com/maps/api/js?key=${REACT_APP_GOOGLE_API_KEY}&libraries=places`,
+      `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY.split(
+        /"/g,
+        ""
+      )}&libraries=places`,
       () => handleScriptLoad(setQuery, autoCompleteRef)
     );
   }, []);

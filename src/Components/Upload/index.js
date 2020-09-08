@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+
+import ImageForm from "../ImageForm";
 import "./styles.css";
 
 const thumbsContainer = {
@@ -35,6 +37,7 @@ const img = {
 };
 
 export default function Upload() {
+  const [displayForm, setDisplayForm] = useState(false);
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
@@ -52,7 +55,12 @@ export default function Upload() {
   const thumbs = files.map((file) => (
     <div style={thumb} key={file.name}>
       <div style={thumbInner}>
-        <img src={file.preview} style={img} alt={file.name} />
+        <img
+          src={file.preview}
+          style={img}
+          alt={file.name}
+          onClick={() => setDisplayForm(true)}
+        />
       </div>
     </div>
   ));
@@ -66,12 +74,15 @@ export default function Upload() {
   );
 
   return (
-    <section className="container">
-      <div {...getRootProps({ className: "droparea" })}>
-        <input {...getInputProps()} />
-        <p className="button">+</p>
-      </div>
-      <div style={thumbsContainer}>{thumbs}</div>
-    </section>
+    <>
+      <section className="container">
+        <div {...getRootProps({ className: "droparea" })}>
+          <input {...getInputProps()} />
+          <p className="button">+</p>
+        </div>
+        <div style={thumbsContainer}>{thumbs}</div>
+      </section>
+      <div>{displayForm && <ImageForm />}</div>
+    </>
   );
 }

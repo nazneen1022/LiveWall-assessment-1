@@ -1,27 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import Navigation from "./Components/Navigation";
 import UploadImage from "./Components/Upload";
+import ImageForm from "./Components/ImageForm";
 
 function App() {
-  const [files, setFiles] = useState([]);
-  const handleDrop = (acceptedFiles) =>
-    setFiles(
-      acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        })
-      )
-    );
   return (
-    <div className="mybody">
-      <Navigation />
-      <br />
-      <div>
-        <UploadImage {...files} onDrop={handleDrop} />
+    <>
+      <div className="mybody">
+        <Navigation />
+        <br />
+        <div>
+          <UploadImage />
+        </div>
+
+        <br />
       </div>
-      <br />
-    </div>
+      <div className="split right">
+        <div className="centered">
+          <ImageForm />
+        </div>
+      </div>
+    </>
   );
 }
 

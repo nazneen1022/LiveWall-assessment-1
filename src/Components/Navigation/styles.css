@@ -1,0 +1,8 @@
+.navbar {
+  column-count: 2;
+}
+.navbar > h3 {
+  text-align: right;
+  padding: 20px;
+  margin: 20px;
+}

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-
-import ImageForm from "../ImageForm";
 import "./styles.css";
 
 const thumbsContainer = {
@@ -36,8 +34,7 @@ const img = {
   height: "240px",
 };
 
-export default function Upload() {
-  const [displayForm, setDisplayForm] = useState(false);
+export default function Upload(props) {
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
@@ -59,7 +56,7 @@ export default function Upload() {
           src={file.preview}
           style={img}
           alt={file.name}
-          onClick={() => setDisplayForm(true)}
+          onClick={() => props.setFormStatus(true)}
         />
       </div>
     </div>
@@ -82,7 +79,6 @@ export default function Upload() {
         </div>
         <div style={thumbsContainer}>{thumbs}</div>
       </section>
-      <div>{displayForm && <ImageForm />}</div>
     </>
   );
 }

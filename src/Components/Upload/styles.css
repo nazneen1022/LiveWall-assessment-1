@@ -10,10 +10,10 @@
   background-color: rgb(241, 22, 22);
   color: white;
   text-align: center;
-  font-size: xx-large;
+  font-size: x-large;
   position: absolute;
   padding: 5px;
-  top: 35%;
+  top: 50%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);

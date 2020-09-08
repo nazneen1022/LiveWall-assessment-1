@@ -6,8 +6,8 @@ import ImageForm from "./Components/ImageForm";
 
 function App() {
   return (
-    <>
-      <div className="mybody">
+    <div className="mybody">
+      <div className="split left">
         <Navigation />
         <br />
         <div>
@@ -17,11 +17,9 @@ function App() {
         <br />
       </div>
       <div className="split right">
-        <div className="centered">
-          <ImageForm />
-        </div>
+        <ImageForm />
       </div>
-    </>
+    </div>
   );
 }
 

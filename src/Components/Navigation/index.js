@@ -5,8 +5,8 @@ import logo from "../../Images/logo.png";
 export default function Navigation() {
   return (
     <div className="navbar">
-      <img src={logo} alt="no-logo" />
-      <h3>Need Help?</h3>
+      <img src={logo} alt="no-logo" width="300px" />
+      <h5>Need Help?</h5>
     </div>
   );
 }

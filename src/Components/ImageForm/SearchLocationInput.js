@@ -35,7 +35,7 @@ async function handlePlaceSelect(updateQuery) {
   const addressObject = autoComplete.getPlace();
   const query = addressObject.formatted_address;
   updateQuery(query);
-  console.log(addressObject);
+  //console.log(addressObject);
 }
 
 function SearchLocationInput(props) {
@@ -44,7 +44,7 @@ function SearchLocationInput(props) {
 
   useEffect(() => {
     loadScript(
-      `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY.split(
+      `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY.replace(
         /"/g,
         ""
       )}&libraries=places`,
@@ -57,7 +57,10 @@ function SearchLocationInput(props) {
       <input
         style={{ width: "100%" }}
         ref={autoCompleteRef}
-        onChange={(event) => setQuery(event.target.value)}
+        onChange={(event) => {
+          setQuery(event.target.value);
+          props.location(event.target.value);
+        }}
         placeholder="Enter where this photo was taken"
         value={query}
         disabled={props.disabled}

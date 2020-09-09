@@ -6,9 +6,24 @@ import axios from "axios";
 import "./styles.css";
 
 export default function ImageForm(props) {
-  console.log("props:", props.files);
   const [tags, setTags] = useState([]);
+
+  //get user inputs into local state
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [selectTags, setSelectTags] = useState([]);
+  const [category, setCategory] = useState("");
+
+  /* get the location input from child component, that
+  uses google Maps API to find the location based on
+  user seearch. Passing this function as component props */
+  function getLocation(value) {
+    setLocation(value);
+  }
+
   useEffect(() => {
+    //Google Vision API request using axios library
     async function fetchTags() {
       const response = await axios.post(
         `https://vision.googleapis.com/v1/images:annotate?key=${process.env.REACT_APP_GOOGLE_API_KEY.replace(
@@ -39,6 +54,7 @@ export default function ImageForm(props) {
       //console.log("response:", response.data.responses.labelAnnotations);
       setTags(response.data.responses.labelAnnotations);
     }
+    //function call the Vision API request
     fetchTags();
   }, [props.files.preview]);
   return (
@@ -50,9 +66,10 @@ export default function ImageForm(props) {
         textAlign: "left",
       }}
     >
-      {!props.enableForm && (
-        <h3 style={{ color: "#FB001C" }}>1 photo is selected</h3>
-      )}
+      <h3 style={{ color: "#FB001C" }}>
+        {!props.enableForm ? `1` : `No`} photo is selected
+      </h3>
+
       <br />
       <Form>
         <Form.Group controlId="formGroupTitle">
@@ -61,6 +78,8 @@ export default function ImageForm(props) {
             type="text"
             placeholder="Fill in an appropriate title for this photo"
             disabled={props.enableForm}
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="formGroupDescription">
@@ -70,16 +89,19 @@ export default function ImageForm(props) {
             rows="3"
             placeholder="Give your photo a short description"
             disabled={props.enableForm}
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="formGroupLocation">
           <Form.Label>Location</Form.Label>
           <SearchLocationInput
+            value={location}
             onChange={() => null}
             disabled={props.enableForm}
+            location={getLocation}
           />
         </Form.Group>
-
         <hr />
         <Form.Group controlId="formGroupTags">
           <Form.Label>Tags</Form.Label>
@@ -87,6 +109,10 @@ export default function ImageForm(props) {
             type="text"
             placeholder="Add tags"
             disabled={props.enableForm}
+            value={selectTags}
+            onChange={(event) =>
+              setSelectTags([...selectTags, event.target.value])
+            }
           />
         </Form.Group>
         <Form.Group>
@@ -101,7 +127,12 @@ export default function ImageForm(props) {
         </Form.Group>
         <Form.Group controlId="formGroupCategory">
           <Form.Label>Category</Form.Label>
-          <Form.Control as="select" disabled={props.enableForm}>
+          <Form.Control
+            as="select"
+            disabled={props.enableForm}
+            value={category}
+            onChange={(event) => setCategory(event.target.value)}
+          >
             <option>Enter a category</option>
             <option>1</option>
             <option>2</option>

@@ -39,8 +39,15 @@ const img = {
 
 function App() {
   const [enableForm, setEnableForm] = useState(true);
-  const setFormStatus = () => setEnableForm(false);
+  const setFormStatus = () => {
+    setEnableForm(false);
+  };
+
+  //Using react-dropzone, useDropzone hook
+
+  //set the files uploaded in local state
   const [files, setFiles] = useState([]);
+  //we can select only one file, and accept all types on images to upload
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     multiple: false,
@@ -48,21 +55,24 @@ function App() {
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {
-            preview: URL.createObjectURL(file),
+            preview: URL.createObjectURL(file), // to see preview of the image, create image uri
           })
         )
       );
     },
   });
   //console.log("files:", files);
+
+  //Display user drag & drop file or selected on click file
   const thumbs = files.map((file) => (
     <div style={thumb} key={file.name}>
       <div style={thumbInner}>
         <img
+          id="uploadedimage"
           src={file.preview}
           style={img}
           alt={file.name}
-          onClick={() => setFormStatus(true)}
+          onClick={() => setFormStatus()}
         />
       </div>
     </div>
@@ -94,6 +104,7 @@ function App() {
 
         <br />
       </div>
+
       <div className="split right">
         <ImageForm files={files} enableForm={enableForm} />
       </div>

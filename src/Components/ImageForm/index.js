@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
 import SearchLocationInput from "./SearchLocationInput";
 import axios from "axios";
 
@@ -14,6 +15,9 @@ export default function ImageForm(props) {
   const [location, setLocation] = useState("");
   const [selectTags, setSelectTags] = useState([]);
   const [category, setCategory] = useState("");
+
+  //set reposnse message from back-end
+  const [message, setMessage] = useState();
 
   /* get the location input from child component, that
   uses google Maps API to find the location based on
@@ -69,12 +73,15 @@ export default function ImageForm(props) {
       imageUrl: `${props.files[0].preview}`,
     };
     //console.log("data:", data);
+
     const postData = async () => {
       const response = await axios.post(
         "http://localhost:4000/uploadPhoto",
         data
       );
       console.log("response:", response.data.message);
+
+      setMessage(response.data.message);
     };
     postData();
   }
@@ -99,8 +106,8 @@ export default function ImageForm(props) {
       <h3 style={{ color: "#FB001C" }}>
         {!props.enableForm ? `1` : `No`} photo is selected
       </h3>
+      {message && <Alert variant="success">{message}</Alert>}
 
-      <br />
       <Form>
         <Form.Group controlId="formGroupTitle">
           <Form.Label>Title</Form.Label>

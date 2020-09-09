@@ -57,6 +57,36 @@ export default function ImageForm(props) {
     //function call the Vision API request
     fetchTags();
   }, [props.files.preview]);
+
+  function upload() {
+    const tagsString = selectTags.join(",");
+    const data = {
+      title,
+      description,
+      location,
+      tags: tagsString,
+      category,
+      imageUrl: `${props.files[0].preview}`,
+    };
+    //console.log("data:", data);
+    const postData = async () => {
+      const response = await axios.post(
+        "http://localhost:4000/uploadPhoto",
+        data
+      );
+      console.log("response:", response.data.message);
+    };
+    postData();
+  }
+
+  function cancel() {
+    setTitle("");
+    setDescription("");
+    setLocation("");
+    setSelectTags([]);
+    setCategory("");
+  }
+
   return (
     <div
       style={{
@@ -141,6 +171,18 @@ export default function ImageForm(props) {
           </Form.Control>
         </Form.Group>
       </Form>
+      <div style={{ padding: "10px", columnCount: "2" }}>
+        <p>
+          <button className="uplaod-button" onClick={upload}>
+            Upload Photo
+          </button>
+        </p>
+        <p>
+          <button className="uplaod-button" onClick={cancel}>
+            Cancel
+          </button>
+        </p>
+      </div>
     </div>
   );
 }

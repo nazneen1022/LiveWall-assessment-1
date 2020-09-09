@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
 import SearchLocationInput from "./SearchLocationInput";
 import axios from "axios";
 
@@ -14,6 +15,9 @@ export default function ImageForm(props) {
   const [location, setLocation] = useState("");
   const [selectTags, setSelectTags] = useState([]);
   const [category, setCategory] = useState("");
+
+  //set reposnse message from back-end
+  const [message, setMessage] = useState();
 
   /* get the location input from child component, that
   uses google Maps API to find the location based on
@@ -57,6 +61,39 @@ export default function ImageForm(props) {
     //function call the Vision API request
     fetchTags();
   }, [props.files.preview]);
+
+  function upload() {
+    const tagsString = selectTags.join(",");
+    const data = {
+      title,
+      description,
+      location,
+      tags: tagsString,
+      category,
+      imageUrl: `${props.files[0].preview}`,
+    };
+    //console.log("data:", data);
+
+    const postData = async () => {
+      const response = await axios.post(
+        "http://localhost:4000/uploadPhoto",
+        data
+      );
+      console.log("response:", response.data.message);
+
+      setMessage(response.data.message);
+    };
+    postData();
+  }
+
+  function cancel() {
+    setTitle("");
+    setDescription("");
+    setLocation("");
+    setSelectTags([]);
+    setCategory("");
+  }
+
   return (
     <div
       style={{
@@ -69,8 +106,8 @@ export default function ImageForm(props) {
       <h3 style={{ color: "#FB001C" }}>
         {!props.enableForm ? `1` : `No`} photo is selected
       </h3>
+      {message && <Alert variant="success">{message}</Alert>}
 
-      <br />
       <Form>
         <Form.Group controlId="formGroupTitle">
           <Form.Label>Title</Form.Label>
@@ -141,6 +178,18 @@ export default function ImageForm(props) {
           </Form.Control>
         </Form.Group>
       </Form>
+      <div style={{ padding: "10px", columnCount: "2" }}>
+        <p>
+          <button className="uplaod-button" onClick={upload}>
+            Upload Photo
+          </button>
+        </p>
+        <p>
+          <button className="uplaod-button" onClick={cancel}>
+            Cancel
+          </button>
+        </p>
+      </div>
     </div>
   );
 }

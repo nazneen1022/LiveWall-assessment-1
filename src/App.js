@@ -86,6 +86,7 @@ function App() {
     [files]
   );
   //console.log("count:", files.length);
+
   return (
     <div className="mybody">
       <div className="split left">

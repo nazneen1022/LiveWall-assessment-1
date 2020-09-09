@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import SearchLocationInput from "./SearchLocationInput";
 import axios from "axios";
+import { apiUrl } from "../../Config/constants";
 
 import "./styles.css";
 
@@ -75,10 +76,7 @@ export default function ImageForm(props) {
     //console.log("data:", data);
 
     const postData = async () => {
-      const response = await axios.post(
-        "http://localhost:4000/uploadPhoto",
-        data
-      );
+      const response = await axios.post(`${apiUrl}/uploadPhoto`, data);
       console.log("response:", response.data.message);
 
       setMessage(response.data.message);
